@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#This script is used to update the Red Hat 7 repo using a mounted disc.
+
+######Verify root.######
+
+if (( EUID != 0 )); then
+   echo "You must be root to use this script." 1>&2
+   exit 100
+fi
+
+######Collect media path.######
+
+
+echo "Enter path to mounted Red Hat 7 media (ex. /mnt/cdrom)"
+read medialoc
+echo #
+echo Media location is $medialoc
+echo #
+
+
+echo "Proceeding with Red Hat 7 repo update."
+
+
+######Rsync files.######
+
+
+echo "Updating packages. This may take a few minutes, depending on disk speed."
+rsync -a --info=progress2 --no-i-r $medialoc/Packages/ /repo/rhel-7-server-rpms/
+if [ $? -eq 0 ]; then
+   echo #
+   echo "Repo packages updated successfully."
+   echo #
+else
+   echo "Sync failed, please verify media."
+   echo #
+exit 1
+fi
+
+
+######Update repodata#######
+
+
+echo "Updating repo metadata, plase wait."
+echo #
+
+createrepo --update /repo/rhel-7-server-rpms
+if [ $? -eq 0 ]; then
+   echo #
+   echo "Repodata update successful. Updated Red Hat 7 repo is ready for use."
+   echo #
+else
+   echo "Repodata generation failed."
+   echo #
+exit 1
+fi
+
+
