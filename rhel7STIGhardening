@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#Baseline Red Hat 7 hardening for INI-Rhel 7.x
+
+#set password age for user accounts
+#RHEL-07-010260
+
+chage -M 60 cust
+chage -M 60 suinw1
+
+#remove nullok reference from /etc/pam.d/password-auth
+#RHEL-07-010290
+
+cp /etc/pam.d/password-auth /etc/pam.d/password-auth.backup
+sed -e 's/\<nullok\>//g' /etc/pam.d/password-auth
