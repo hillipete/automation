@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Baseline Red Hat 7 hardening for INI-Rhel 7.x
+#Baseline Red Hat 7 hardening for Rhel 7.x
 
 #set password age for user accounts
 #RHEL-07-010260
