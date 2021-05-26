@@ -5,8 +5,8 @@
 #set password age for user accounts
 #RHEL-07-010260
 
-chage -M 60 cust
-chage -M 60 suinw1
+chage -M 60 customer
+chage -M 60 support
 
 #remove nullok reference from /etc/pam.d/password-auth
 #RHEL-07-010290
